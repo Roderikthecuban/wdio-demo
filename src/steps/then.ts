@@ -3,7 +3,7 @@ import { expect } from "chai";
 import TodoAppPage from "../pageobjects/TodoApp.page";
 import { sample } from "lodash";
 
-Then(/^I should see the "([^"]*)" task appear at the end of the list$/, function (task) {
+Then(/^I should see the "([^"]*)" task appear at the end of the list$/, function (task: string) {
   const tasks = TodoAppPage.getAllTasks();
   expect(tasks[tasks.length - 1].text)
     .to.be.an("string")
@@ -104,7 +104,7 @@ Then(/^I mark "([^"]*)" tasks as "([^"]*)"$/, function (count, status) {
   for (const i of [...Array(count).keys()]) {
     const tasks = TodoAppPage.getAllTasks().filter((task) => task.status !== status);
     const sampleTask = sample(tasks);
-    TodoAppPage.toggleTask(sampleTask);
+    TodoAppPage.toggleTask(sampleTask.text);
     selectedTasks.push(sampleTask.text);
   }
 

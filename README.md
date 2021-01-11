@@ -1,7 +1,3 @@
-Boilerplate project to write BDD tests with [Cucumber](https://cucumber.io/) and execute with [docker selenium](https://github.com/SeleniumHQ/docker-selenium).
-Tests are written in an ordinary language that bridges the gap between business and technical people.
-The docker selenium simplifies the setup and avoids any local installation of browser specific dependencies.
-
 ## Features
 
 - Simple setup, no need for local preinstalled Selenium Grid and browser drivers
@@ -241,3 +237,8 @@ npm run ci
 ## License
 
 [MIT](LICENSE)
+
+## Boilerplate description
+Boilerplate project to write BDD tests with [Cucumber](https://cucumber.io/) and execute with [docker selenium](https://github.com/SeleniumHQ/docker-selenium).
+Tests are written in an ordinary language that bridges the gap between business and technical people.
+The docker selenium simplifies the setup and avoids any local installation of browser specific dependencies.

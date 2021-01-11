@@ -1,6 +1,5 @@
 import Page from "./page";
 import { getSentence } from "../utilities/loremIpsum";
-
 interface Task {
   text: string;
   status: string;
@@ -87,17 +86,18 @@ class TodoAppPage extends Page {
     this.toggleAllButton.click();
   }
 
-  addTask(text: string): void {
+  addTask(task: Task): void {
     this.inputField.clearValue();
-    this.inputField.setValue(text);
+    this.inputField.setValue(task.text);
     browser.pause(1000);
     browser.keys("Enter");
+    if (task.status == "completed") this.toggleTask(task.text);
   }
 
-  toggleTask(task: Task): void {
+  toggleTask(t: string): void {
     const tasks = this.taskList.$$("li");
     for (const row of tasks) {
-      if (row.getText() === task.text) row.$(".toggle").click();
+      if (row.getText() === t) row.$(".toggle").click();
     }
   }
 
@@ -148,9 +148,9 @@ class TodoAppPage extends Page {
 
   addRandomTask(status: string): void {
     const text = getSentence();
-    this.addTask(text);
+    this.addTask({ text: text, status: "active" });
     if (status === "completed") {
-      this.toggleTask(this.getTask(text));
+      this.toggleTask(this.getTask(text).text);
     }
   }
 

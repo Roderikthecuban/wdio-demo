@@ -1,7 +1,8 @@
-import { Then } from "cucumber";
 import { expect } from "chai";
-import TodoAppPage from "../pageobjects/TodoApp.page";
+import { Then } from "cucumber";
 import { sample } from "lodash";
+import JSONPlaceholder, { Post } from "../api/JSONPlaceholder";
+import TodoAppPage from "../pageobjects/TodoApp.page";
 
 Then(/^I should see the "([^"]*)" task appear at the end of the list$/, function (task: string) {
   const tasks = TodoAppPage.getAllTasks();
@@ -114,4 +115,25 @@ Then(/^I mark "([^"]*)" tasks as "([^"]*)"$/, function (count, status) {
   selectedTasks.forEach((selectedTask) => {
     expect(tasksAfterAction).to.be.an("array").that.contains(selectedTask);
   });
+});
+
+const globalAny: any = global;
+Then("I can update and delete a random post from the list", async () => {
+  const randomPost: Post = sample(globalAny.posts);
+  const newPost = { ...randomPost, title: "Edited" };
+  const updatedPost: Post = await JSONPlaceholder.patchPost(newPost);
+  expect(updatedPost.id).to.equal(newPost.id);
+  expect(updatedPost.userId).to.equal(newPost.userId);
+  expect(updatedPost.title).to.equal(newPost.title);
+  expect(updatedPost.body).to.equal(newPost.body);
+
+  const newPost2 = { ...randomPost, title: "Edited2" };
+  const updatedPost2: Post = await JSONPlaceholder.putPost(newPost);
+  expect(updatedPost2.id).to.equal(newPost2.id);
+  expect(updatedPost2.userId).to.equal(newPost2.userId);
+  expect(updatedPost2.title).to.equal(newPost2.title);
+  expect(updatedPost2.body).to.equal(newPost2.body);
+
+  const deleteResponse = JSONPlaceholder.deletePost(randomPost.id);
+  expect({}).to.equal(deleteResponse);
 });

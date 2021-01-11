@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { When } from "cucumber";
 import TodoAppPage from "../pageobjects/TodoApp.page";
-import JSONPlaceholder, { TodoTask } from "../features/api/JSONPlaceholder";
+import JSONPlaceholder, { TodoTask } from "../api/JSONPlaceholder";
 /*THIS IS THE NEW STUFF */
 
 When(/^I add "([^"]*)" as a task$/, function (todoElement: string) {
@@ -30,4 +30,17 @@ When("I add {int} random todo using JSON Placeholder", function (int) {
       expect(TodoAppPage.getAllTasks().length + parseInt(i)).to.equal(2 + i + 1);
     }
   });
+});
+
+const globalAny: any = global;
+When("I list a batch of posts", async () => {
+  const posts = await JSONPlaceholder.getPosts();
+  expect(posts).to.be.an("array");
+  expect(typeof posts.length).to.equal(100);
+  expect(typeof posts[0].body).to.equal("string");
+  expect(typeof posts[0].title).to.equal("string");
+  expect(typeof posts[0].id).to.equal("number");
+  expect(typeof posts[0].userId).to.equal("number");
+  globalAny.posts = posts;
+  console.log(globalAny.posts);
 });

@@ -1,0 +1,7 @@
+Feature: Todo App webdriverio test integration with 3rd party API - POC
+    Background:
+        Given Given I am on the Example Todo App main page
+
+    Scenario: Query a batch of posts
+        When I request a batch of posts
+        Then I can update and delete a random post from the list
